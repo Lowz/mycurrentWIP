@@ -54,6 +54,9 @@ describe('My welcome page should', function () {
             expect(compo.view.childNodes[1].innerHTML).toBe('Welcome to the Durandal Starter Kit!');
         });
     });
-
+    
+    it('do 2 = 2', function () {
+        expect(2).toEqual(2);
+    });
 });
 

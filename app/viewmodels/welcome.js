@@ -8,8 +8,6 @@
 
         this.compositionComplete = function (view, parent) {
             app = require('durandal/app');
-            console.log('below came from compo complete!');
-            console.log(view, parent);
             app.trigger('test:compositionComplete', { view: view, viewModel: this });
         };
 

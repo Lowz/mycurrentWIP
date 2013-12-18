@@ -1,11 +1,5 @@
 ﻿define(['plugins/router', 'durandal/app'], function (router, app) {
     return {
-        //compositionComplete: function (view, parent) {
-        //    app = require('durandal/app');
-        //    console.log('below came from compo complete!');
-        //    console.log(view, parent);
-        //    app.trigger('test:compositionComplete', { view: view, viewModel: this });
-        //},
         router: router,
         search: function() {
             //It's really easy to show a message box.

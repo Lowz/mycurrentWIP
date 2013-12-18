@@ -1,0 +1,5 @@
+E:\Desktop\Development Area\2\2\bin\2.dll
+E:\Desktop\Development Area\2\2\bin\2.pdb
+E:\Desktop\Development Area\2\2\obj\Debug\2.csprojResolveAssemblyReference.cache
+E:\Desktop\Development Area\2\2\obj\Debug\2.dll
+E:\Desktop\Development Area\2\2\obj\Debug\2.pdb

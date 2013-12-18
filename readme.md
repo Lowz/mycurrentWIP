@@ -1,1 +1,1 @@
-Modified RainerAtSpirits HTMLStarterKitPro to enable DOM testing(albeit messy - not fully functional)
+Modified RainerAtSpirits HTMLStarterKitPro to enable DOM testing, works in both cli and browser

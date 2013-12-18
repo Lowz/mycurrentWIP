@@ -1,5 +1,5 @@
 /*global module, require */
-module.exports = function( grunt ) {
+module.exports = function (grunt) {
     'use strict';
 
     // Livereload and connect variables
@@ -7,7 +7,7 @@ module.exports = function( grunt ) {
     var lrSnippet = require('connect-livereload')({
         port: LIVERELOAD_PORT
     });
-    var mountFolder = function( connect, dir ) {
+    var mountFolder = function (connect, dir) {
         return connect.static(require('path').resolve(dir));
     };
     var mixIn = require('mout/object/mixIn');
@@ -24,121 +24,124 @@ module.exports = function( grunt ) {
     };
 
     grunt.initConfig({
-            pkg: grunt.file.readJSON('package.json'),
-            clean: {
-                build: ['build/*']
-            },
-            connect: {
-                build: {
-                    options: {
-                        port: 9001,
-                        hostname: 'localhost',
-                        base: 'build'
-                    }
-                },
-                dev: {
-                    options: {
-                        port: 8999,
-                        hostname: 'localhost',
-                        middleware: function( connect ) {
-                            return [lrSnippet, mountFolder(connect, '.')];
-                        }
-                    }
-                }
-            },
-            copy: {
-                lib: {
-                    src: 'lib/**/**',
-                    dest: 'build/'
-                },
-                index: {
-                    src: 'index.html',
-                    dest: 'build/'
-                },
-                css: {
-                    src: 'css/**',
-                    dest: 'build/'
-                }
-            },
-            open: {
-                dev: {
-                    path: 'http://localhost:<%= connect.dev.options.port %>/_SpecRunner.html'
-                },
-                build: {
-                    path: 'http://localhost:<%= connect.build.options.port %>'
-                }
-            },
-            durandal: {
-                main: {
-                    src: ['app/**/*.*', 'lib/durandal/**/*.js'],
-                    options: {
-                        name: '../lib/require/almond-custom',
-                        baseUrl: requireConfig.baseUrl,
-                        mainPath: 'app/main',
-                        paths: mixIn({}, requireConfig.paths, { 'almond': '../lib/require/almond-custom.js' }),
-                        exclude: [],
-                        optimize: 'none',
-                        out: 'build/app/main.js'
-                    }
-                }
-            },
-            jasmine: {
-                dev: {
-                    src: 'app/viewmodels/*.js',
-                    options: {
-                        specs: 'test/specs/dev/**/*spec.js',
-                        keepRunner: true,
-                        template: require('grunt-template-jasmine-requirejs'),
-                        templateOptions: {
-                            requireConfig: requireConfig
-                        }
-                    }
-                },
-                build: {
-                    options: {
-                        specs: 'test/specs/build/**/*spec.js',
-                        keepRunner: true,
-                        template: require('grunt-template-jasmine-requirejs'),
-                        templateOptions: {
-                            requireConfig: requireConfig
-                        }
-                    }
-                }
-            },
-            jshint: {
-                all: ['Gruntfile.js', 'app/**/*.js', 'test/specs/**/*.js']
-            },
-            uglify: {
+        pkg: grunt.file.readJSON('package.json'),
+        clean: {
+            build: ['build/*']
+        },
+        connect: {
+            build: {
                 options: {
-                    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n' +
-                        '* Copyright (c) <%= grunt.template.today("yyyy") %> YourName/YourCompany \n' +
-                        '* Available via the MIT license.\n' +
-                        '* see: http://opensource.org/licenses/MIT for blueprint.\n' +
-                        '*/\n'
-                },
-                build: {
-                    src: 'build/app/main.js',
-                    dest: 'build/app/main-built.js'
+                    port: 9001,
+                    hostname: 'localhost',
+                    base: 'build'
                 }
             },
-
-            watch: {
-                build: {
-                    files: ['build/**/*.js'],
-                    tasks: ['jasmine:build']
-                },
-                dev: {
-                    files: ['test/specs/dev/**/*spec.js', 'app/**/*.js'],
-                    tasks: ['jasmine:dev'],
-                    options: {
-                        livereload: true
+            dev: {
+                options: {
+                    port: 8999,
+                    hostname: 'localhost',
+                    middleware: function (connect) {
+                        return [lrSnippet, mountFolder(connect, '.')];
                     }
                 }
             }
+        },
+        copy: {
+            lib: {
+                src: 'lib/**/**',
+                dest: 'build/'
+            },
+            index: {
+                src: 'index.html',
+                dest: 'build/'
+            },
+            css: {
+                src: 'css/**',
+                dest: 'build/'
+            }
+        },
+        open: {
+            dev: {
+                path: 'http://localhost:<%= connect.dev.options.port %>/_SpecRunner.html'
+            },
+            build: {
+                path: 'http://localhost:<%= connect.build.options.port %>'
+            },
+            index: {
+                path: 'http://localhost:<%= connect.dev.options.port %>/index.html'
+            }
+        },
+        durandal: {
+            main: {
+                src: ['app/**/*.*', 'lib/durandal/**/*.js'],
+                options: {
+                    name: '../lib/require/almond-custom',
+                    baseUrl: requireConfig.baseUrl,
+                    mainPath: 'app/main',
+                    paths: mixIn({}, requireConfig.paths, { 'almond': '../lib/require/almond-custom.js' }),
+                    exclude: [],
+                    optimize: 'none',
+                    out: 'build/app/main.js'
+                }
+            }
+        },
+        jasmine: {
+            dev: {
+                src: 'app/viewmodels/*.js',
+                options: {
+                    specs: 'test/specs/dev/**/*spec.js',
+                    keepRunner: true,
+                    template: require('grunt-template-jasmine-requirejs'),
+                    templateOptions: {
+                        requireConfig: requireConfig
+                    }
+                }
+            },
+            build: {
+                options: {
+                    specs: 'test/specs/build/**/*spec.js',
+                    keepRunner: true,
+                    template: require('grunt-template-jasmine-requirejs'),
+                    templateOptions: {
+                        requireConfig: requireConfig
+                    }
+                }
+            }
+        },
+        jshint: {
+            all: ['Gruntfile.js', 'app/**/*.js', 'test/specs/**/*.js']
+        },
+        uglify: {
+            options: {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n' +
+                    '* Copyright (c) <%= grunt.template.today("yyyy") %> YourName/YourCompany \n' +
+                    '* Available via the MIT license.\n' +
+                    '* see: http://opensource.org/licenses/MIT for blueprint.\n' +
+                    '*/\n'
+            },
+            build: {
+                src: 'build/app/main.js',
+                dest: 'build/app/main-built.js'
+            }
+        },
+
+        watch: {
+            build: {
+                files: ['build/**/*.js'],
+                tasks: ['jasmine:build']
+            },
+            dev: {
+                files: ['test/specs/dev/**/*spec.js', 'app/**/*.js'],
+                tasks: ['jasmine:dev'],
+                options: {
+                    livereload: true
+                }
+            }
         }
+    }
     );
 
-// Loading plugin(s)
+    // Loading plugin(s)
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -149,7 +152,8 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-durandal');
 
-    grunt.registerTask('default', ['jshint', 'jasmine:dev', 'connect:dev:livereload', 'open:dev', 'watch:dev']);
+    grunt.registerTask('default', ['jshint', 'jasmine:dev', 'connect:dev', 'open:dev','watch:dev']);
     grunt.registerTask('build', ['jshint', 'jasmine:dev', 'clean', 'copy', 'durandal:main', 'uglify', 'jasmine:build', 'connect:build', 'open:build', 'watch:build']);
 
 };
+//, 'open:index'

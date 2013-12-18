@@ -16,7 +16,7 @@ describe('My welcome page should', function () {
     var flag;
     var timeErr;
 
-
+    
     it('have a title of Welcome to the Durandal Starter Kit!', function () {
         timeErr = 'before the runs';
         //first runs block starts durandals composition functions, and listens for an event which passes

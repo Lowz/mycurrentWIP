@@ -19,8 +19,7 @@ module.exports = function (grunt) {
             'text': '../lib/require/text',
             'durandal': '../lib/durandal/js',
             'plugins': '../lib/durandal/js/plugins',
-            'transitions': '../lib/durandal/js/transitions',
-            'livereload': '../node_modules/connect-livereload/index'
+            'transitions': '../lib/durandal/js/transitions'
         }
     };
 
@@ -158,4 +157,3 @@ module.exports = function (grunt) {
     grunt.registerTask('build', ['jshint', 'jasmine:dev', 'clean', 'copy', 'durandal:main', 'uglify', 'jasmine:build', 'connect:build', 'open:build', 'watch:build']);
 
 };
-//, 'open:index'

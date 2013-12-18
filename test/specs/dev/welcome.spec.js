@@ -1,4 +1,5 @@
 /*global jasmine, describe, beforeEach, it, expect, require */
+
 describe('My welcome page should', function () {
     "use strict";
     /*VARS: VuT = viewmodel under test, 
@@ -14,6 +15,7 @@ describe('My welcome page should', function () {
     var compo;
     var flag;
     var timeErr;
+
 
     it('have a title of Welcome to the Durandal Starter Kit!', function () {
         timeErr = 'before the runs';
@@ -52,5 +54,6 @@ describe('My welcome page should', function () {
             expect(compo.view.childNodes[1].innerHTML).toBe('Welcome to the Durandal Starter Kit!');
         });
     });
+
 });
 

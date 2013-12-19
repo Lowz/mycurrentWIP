@@ -15,18 +15,16 @@ describe('My welcome page should', function () {
     var compo;
     var flag = false;
     var timeErr;
-
+    var count = 0;
 
     //The bulk of this code is run once. Since flag is set to true (and then never changed) as part of this setup, it is 
     //used to determine whether or not to run the full "beforeEach()" code
     beforeEach(function () {
-        if (flag === true) {
-            return flag;
-        } else {
             timeErr = 'before the runs';
             //first runs block starts durandals composition functions, and listens for an event which passes
             //the V/VM to our test, then changes flag to true to allow the next "runs" to run
             runs(function () {
+                count++;
                 timeErr = 'before app start';
                 app.start().then(function () {
                     timeErr = 'after app start';
@@ -55,12 +53,14 @@ describe('My welcome page should', function () {
             runs(function () {
                 //since we just want the view/viewmodel from above code, this is empty as we need to force jasmine to wait on V/VM and 2 "runs"
                 //functions is part of the syntax
+                console.log(count);
             });
-        }
+        //}
     });
-
-    it('have a title that matches the dom', function () {
-        expect(compo.view.childNodes[1].innerHTML).toBe('myPage!');
+    describe('blablabla', function () {
+        it('have a title that matches the dom', function () {
+            expect(compo.view.childNodes[1].innerHTML).toBe('myPage!');
+        });
     });
 });
 

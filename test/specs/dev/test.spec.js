@@ -1,6 +1,6 @@
-/*global jasmine, describe, beforeEach, it, expect, require */
+﻿/*global jasmine, describe, beforeEach, it, expect, require */
 
-describe('My welcome page should', function () {
+describe('My myPage page should', function () {
     "use strict";
     /*VARS: VuT = viewmodel under test, 
     app = durandals app plugin(used to attach view to viewModel,
@@ -9,11 +9,11 @@ describe('My welcome page should', function () {
     flag = used to let jasmine know it can run the last runs function when true
     timeErr = the error message displayed when timing out, used here to find where phantomjs ran up to
     */
-    var VuT = 'viewmodels/welcome';
+    var VuT = require('viewmodels/myPage');
     var app = require('durandal/app');
     var viewLocator = require('durandal/viewLocator');
     var compo;
-    var flag;
+    var flag = false;
     var timeErr;
     var count = 0;
 
@@ -30,7 +30,7 @@ describe('My welcome page should', function () {
                 app.start().then(function () {
                     timeErr = 'after app start';
                     viewLocator.useConvention();
-                    app.setRoot('../../../app/viewmodels/welcome', 'entrance');
+                    app.setRoot('../../../app/viewmodels/myPage', 'entrance');
                     timeErr = 'before app on';
 
                     app.on('test:compositionComplete').then(function (obj) {
@@ -58,8 +58,28 @@ describe('My welcome page should', function () {
         }
     });
 
-    it('have a title that matches the dom', function () {
+    it('have a title of myPage', function () {
         expect(compo.view.childNodes[1].innerHTML).toBe('myPage!');
+    });
+
+    it('test1', function () {
+        expect(1).toEqual(1);
+    });
+
+    it('test2', function () {
+        expect(1).toEqual(1);
+    });
+
+    it('test3', function () {
+        expect(1).toEqual(1);
+    });
+
+    it('test4', function () {
+        expect(1).toEqual(1);
+    });
+
+    it('test5', function () {
+        expect(1).toEqual(1);
     });
 });
 

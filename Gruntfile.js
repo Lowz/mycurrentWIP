@@ -19,7 +19,8 @@ module.exports = function (grunt) {
             'text': '../lib/require/text',
             'durandal': '../lib/durandal/js',
             'plugins': '../lib/durandal/js/plugins',
-            'transitions': '../lib/durandal/js/transitions'
+            'transitions': '../lib/durandal/js/transitions',
+            'async': '../lib/jasmineasync'
         }
     };
 
@@ -152,8 +153,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-open');
     grunt.loadNpmTasks('grunt-durandal');
 
-    grunt.registerTask('default', ['jshint','jasmine:dev','watch:dev']);
-    grunt.registerTask('debug', ['jshint', 'connect:dev:livereload', 'open:dev', 'jasmine:dev', 'watch:dev']);
+    grunt.registerTask('default', ['jshint', 'jasmine:dev']);
+    grunt.registerTask('jshinter',['jshint']);
+    grunt.registerTask('watcher', ['jshint', 'jasmine:dev', 'watch:dev']);
+    grunt.registerTask('debug', ['jshint', 'connect:dev:livereload', 'open:dev', 'watch:dev']);
     grunt.registerTask('build', ['jshint', 'jasmine:dev', 'clean', 'copy', 'durandal:main', 'uglify', 'jasmine:build', 'connect:build', 'open:build', 'watch:build']);
 
 };

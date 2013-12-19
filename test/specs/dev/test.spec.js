@@ -2,22 +2,22 @@
 
 describe('My myPage page should', function () {
     "use strict";
-    /*VARS: VuT = viewmodel under test, 
+    /*VARS: VuT = string path for viewmodel under test, 
     app = durandals app plugin(used to attach view to viewModel,
     viewLocator = probably not needed, used to declare standard naming conventions for views/viewmodels
     compo = object with both view and viewmodel, "composition"
     flag = used to let jasmine know it can run the last runs function when true
     timeErr = the error message displayed when timing out, used here to find where phantomjs ran up to
     */
-    var VuT = require('viewmodels/myPage');
+    var VuT = ('../../../app/viewmodels/myPage');
     var app = require('durandal/app');
     var viewLocator = require('durandal/viewLocator');
     var compo;
     var flag = false;
     var timeErr;
-    var count = 0;
 
-
+    //The bulk of this code is run once. Since flag is set to true (and then never changed) as part of this setup, it is 
+    //used to determine whether or not to run the full "beforeEach()" code
     beforeEach(function () {
         if (flag === true) {
             return flag;
@@ -30,7 +30,7 @@ describe('My myPage page should', function () {
                 app.start().then(function () {
                     timeErr = 'after app start';
                     viewLocator.useConvention();
-                    app.setRoot('../../../app/viewmodels/myPage', 'entrance');
+                    app.setRoot(VuT, 'entrance');
                     timeErr = 'before app on';
 
                     app.on('test:compositionComplete').then(function (obj) {
@@ -50,10 +50,10 @@ describe('My myPage page should', function () {
             waitsFor(function () {
                 return flag;
             }, timeErr);
-
-            //now we have the dom we can finally test that the DOM has got the right title. if something changes it, it will return failed test
+            
             runs(function () {
-                console.log(count);
+                //since we just want the view/viewmodel from above code, this is empty as we need to force jasmine to wait on V/VM and 2 "runs"
+                //functions is part of the syntax
             });
         }
     });
@@ -71,7 +71,7 @@ describe('My myPage page should', function () {
     });
 
     it('test3', function () {
-        expect(1).toEqual(1);
+        expect(2).toEqual(1);
     });
 
     it('test4', function () {

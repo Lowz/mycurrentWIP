@@ -15,47 +15,42 @@ describe('My welcome page should', function () {
     var compo;
     var flag = false;
     var timeErr;
-    var count = 0;
 
-    //The bulk of this code is run once. Since flag is set to true (and then never changed) as part of this setup, it is 
-    //used to determine whether or not to run the full "beforeEach()" code
+    //The below is run once, as it is a beforeEach of the suites inside "My mypage should" describe block
     beforeEach(function () {
-            timeErr = 'before the runs';
-            //first runs block starts durandals composition functions, and listens for an event which passes
-            //the V/VM to our test, then changes flag to true to allow the next "runs" to run
-            runs(function () {
-                count++;
-                timeErr = 'before app start';
-                app.start().then(function () {
-                    timeErr = 'after app start';
-                    viewLocator.useConvention();
-                    app.setRoot(VuT, 'entrance');
-                    timeErr = 'before app on';
+        timeErr = 'before the runs';
+        //first runs block starts durandals composition functions, and listens for an event which passes
+        //the V/VM to our test, then changes flag to true to allow the next "runs" to run
+        runs(function () {
+            timeErr = 'before app start';
+            app.start().then(function () {
+                timeErr = 'after app start';
+                viewLocator.useConvention();
+                app.setRoot(VuT, 'entrance');
+                timeErr = 'before app on';
 
-                    app.on('test:compositionComplete').then(function (obj) {
-                        timeErr = 'after app on';
-                        compo = obj;
+                app.on('test:compositionComplete').then(function (obj) {
+                    timeErr = 'after app on';
+                    compo = obj;
 
-                        if (compo !== undefined) {
-                            timeErr = 'inside the if';
-                            flag = true;
-                            app.off();
-                        }
-                    });
+                    if (compo !== undefined) {
+                        timeErr = 'inside the if';
+                        flag = true;
+                        app.off();
+                    }
                 });
-            }, 'async');
-
-            //waitsFor is repeatedly run untill flag is true (approx 40times). timeErr is a custom error message for CLI
-            waitsFor(function () {
-                return flag;
-            }, timeErr);
-
-            runs(function () {
-                //since we just want the view/viewmodel from above code, this is empty as we need to force jasmine to wait on V/VM and 2 "runs"
-                //functions is part of the syntax
-                console.log(count);
             });
-        //}
+        }, 'async');
+
+        //waitsFor is repeatedly run untill flag is true (approx 40times). timeErr is a custom error message for CLI
+        waitsFor(function () {
+            return flag;
+        }, timeErr);
+
+        runs(function () {
+            //since we just want the view/viewmodel from above code, this is empty as we need to force jasmine to wait on V/VM and 2 "runs"
+            //functions is part of the syntax
+        });
     });
     describe('blablabla', function () {
         it('have a title that matches the dom', function () {

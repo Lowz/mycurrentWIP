@@ -12,10 +12,10 @@
     "Grunt",
     "Jasmine"
   ],
-  "author": "Rainer Wittmann",
+  "author": "Lawrence Wheeldon",
   "repository": {
     "type": "https",
-    "url": "https://github.com/RainerAtSpirit/HTMLStarterKitPro.git"
+    "url": "https://github.com/Lowz/SPA-TestReady"
   },
   "license": "MIT",
   "devDependencies": {

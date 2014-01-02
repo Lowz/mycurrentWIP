@@ -6,7 +6,10 @@
         'transitions' : '../lib/durandal/js/transitions',
         'knockout': '../lib/knockout/knockout-2.3.0',
         'bootstrap': '../lib/bootstrap/js/bootstrap',
-        'jquery': '../lib/jquery/jquery-1.9.1'
+        'jquery': '../lib/jquery/jquery-1.9.1',
+        'models': '../models',
+        'breeze': '../Scripts/breeze.min',
+        'services': 'services'
     },
     shim: {
         'bootstrap': {

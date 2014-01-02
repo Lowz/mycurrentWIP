@@ -48,6 +48,5 @@ describe('My myPage page should', function () {
 	//now we have the dom we can finally test that the DOM has got the right title. if something changes it, it will return failed test
 	xit('have a title of myPage', function () {
 		expect(compo.view.childNodes[1].innerHTML).toBe('myPage');
-
 	});
 });

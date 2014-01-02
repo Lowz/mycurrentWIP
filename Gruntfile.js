@@ -20,7 +20,10 @@ module.exports = function (grunt) {
             'durandal': '../lib/durandal/js',
             'plugins': '../lib/durandal/js/plugins',
             'transitions': '../lib/durandal/js/transitions',
-            'async': '../lib/jasmineasync'
+            'async': '../lib/jasmineasync',
+            'breeze': '../Scripts/breeze.min',
+            'services': 'services',
+            'q': '../Scripts/q'
         }
     };
 

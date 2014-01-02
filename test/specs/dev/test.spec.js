@@ -1,7 +1,7 @@
 ﻿/*global jasmine, describe, beforeEach, it, expect, require */
 
 describe('My myPage page should', function () {
-    "use strict";
+    //"use strict";
     /*VARS: VuT = string path for viewmodel under test, 
     app = durandals app plugin(used to attach view to viewModel,
     viewLocator = probably not needed, used to declare standard naming conventions for views/viewmodels
@@ -12,6 +12,8 @@ describe('My myPage page should', function () {
     var VuT = ('../../../app/viewmodels/myPage');
     var app = require('durandal/app');
     var viewLocator = require('durandal/viewLocator');
+    var $ = require("jquery");
+    require(["../Scripts/q"]);
     var compo;
     var flag = false;
     var timeErr;
@@ -22,6 +24,9 @@ describe('My myPage page should', function () {
         //first runs block starts durandals composition functions, and listens for an event which passes
         //the V/VM to our test, then changes flag to true to allow the next "runs" to run
         runs(function () {
+
+            Q = require("../Scripts/q");
+
             timeErr = 'before app start';
             app.start().then(function () {
                 timeErr = 'after app start';
@@ -44,7 +49,7 @@ describe('My myPage page should', function () {
 
         //waitsFor is repeatedly run till flag is true (approx 40times)
         waitsFor(function () {
-            return flag;
+            return (flag && Q  !== undefined);
         }, timeErr);
 
         runs(function () {
@@ -56,28 +61,15 @@ describe('My myPage page should', function () {
     describe('squirrel', function () {
 
         it('have a title of myPage', function () {
-            expect(compo.view.childNodes[1].innerHTML).toBe('myPage!');
+            expect($('h2:first')[0].innerHTML).toBe('myPage');
         });
 
-        it('test1', function () {
-            expect(1).toEqual(1);
+        it('to have items after calling load', function () {
+            compo.viewModel.load();
+
+            expect(compo.viewModel.Dummys().length).toBe(3);
         });
 
-        it('test2', function () {
-            expect(1).toEqual(1);
-        });
-
-        it('test3', function () {
-            expect(2).toEqual(1);
-        });
-
-        it('test4', function () {
-            expect(1).toEqual(1);
-        });
-
-        it('test5', function () {
-            expect(1).toEqual(1);
-        });
     });
 });
 

@@ -108,7 +108,11 @@
     <Content Include="app\views\myPage.html" />
     <Content Include="app\views\shell.html" />
     <Content Include="app\views\welcome.html" />
-    <Content Include="App_Start\dataservice.js" />
+    <Content Include="App_Data\Database1.mdf" />
+    <Content Include="App_Data\Database1_log.ldf">
+      <DependentUpon>Database1.mdf</DependentUpon>
+    </Content>
+    <Content Include="app\services\dataservice.js" />
     <Content Include="css\ie10mobile.css" />
     <Content Include="css\starterkit.css" />
     <Content Include="Gruntfile.js" />
@@ -193,7 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BreezeWebApiConfig.cs" />
-    <Compile Include="Controllers\BreezeController.cs" />
+    <Compile Include="Controllers\DummyController.cs" />
+    <Compile Include="models\dummy.cs" />
+    <Compile Include="models\MyDatabaseContext.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />

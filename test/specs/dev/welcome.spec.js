@@ -54,7 +54,7 @@ describe('My welcome page should', function () {
     });
     describe('blablabla', function () {
         it('have a title that matches the dom', function () {
-            expect(compo.view.childNodes[1].innerHTML).toBe('myPage!');
+            expect(compo.view.childNodes[1].innerHTML).toBe('Welcome to the Durandal Starter Kit!');
         });
     });
 });

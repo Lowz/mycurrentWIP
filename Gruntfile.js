@@ -133,10 +133,14 @@ module.exports = function (grunt) {
             },
             dev: {
                 files: ['test/specs/dev/**/*spec.js', 'app/**/*.js'],
-                tasks: ['jshint','jasmine:dev'],
+                tasks: ['jshint'],
                 options: {
                     livereload: true
                 }
+            },
+            cli: {
+                files: ['test/specs/dev/**/*spec.js', 'app/**/*.js'],
+                tasks: ['jshint', 'jasmine:dev']
             }
         }
     }
@@ -160,9 +164,9 @@ module.exports = function (grunt) {
     //BUG SYMPTOMNS:
     //'jasmine:dev' running in CLI for 'debug' task, other weird and wonderful things. exponential loop which launches more and more tasks.
     //using 'watch:dev' can hide these as it WAITS for a change. But really its just a temp pause on the loop
-    grunt.registerTask('default', ['jshint', 'jasmine:dev']);
-    grunt.registerTask('jshinter',['jshint']);
-    grunt.registerTask('watcher', ['jshint', 'jasmine:dev', 'watch:dev']);
+    grunt.registerTask('default', ['jshint', 'jasmine:dev', 'watch:cli']);
+    grunt.registerTask('jshinter', ['jshint']);
+    grunt.registerTask('watcher', ['watch:dev', 'jasmine:dev']);
     grunt.registerTask('debug', ['jshint', 'connect:dev:livereload', 'open:dev', 'watch:dev']);
     grunt.registerTask('build', ['jshint', 'jasmine:dev', 'clean', 'copy', 'durandal:main', 'uglify', 'jasmine:build', 'connect:build', 'open:build', 'watch:build']);
 

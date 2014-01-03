@@ -10,6 +10,7 @@
     var load = function () {
         if (isloaded === false) {
             dataservice.getDUMMYS(dummys);
+            console.info('sup', dummys()[0]);
         }
 
         //isloaded = true;

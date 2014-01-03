@@ -167,7 +167,7 @@ module.exports = function (grunt) {
     //BUG SYMPTOMNS:
     //'jasmine:dev' running in CLI for 'debug' task, other weird and wonderful things. exponential loop which launches more and more tasks.
     //using 'watch:dev' can hide these as it WAITS for a change. But really its just a temp pause on the loop
-    grunt.registerTask('default', ['jshint', 'jasmine:dev', 'watch:cli']);
+    grunt.registerTask('default', ['jshint', 'jasmine:dev']);
     grunt.registerTask('jshinter', ['jshint']);
     grunt.registerTask('watcher', ['watch:dev', 'jasmine:dev']);
     grunt.registerTask('debug', ['jshint', 'connect:dev:livereload', 'open:dev', 'watch:dev']);

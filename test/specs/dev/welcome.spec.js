@@ -1,6 +1,6 @@
 /*global jasmine, describe, beforeEach, it, expect, require */
 
-describe('My welcome page should', function () {
+describe('My welcome page ', function () {
     "use strict";
     /*VARS: VuT = string path for viewmodel under test,
     app = durandals app plugin(used to attach view to viewModel,
@@ -16,8 +16,14 @@ describe('My welcome page should', function () {
     var flag = false;
     var timeErr;
 
+    //check for Q, require it if not present (small hack)
+    if (window.Q === undefined) {
+        require(["../Scripts/q"]);
+    }
+
     //The below is run once, as it is a beforeEach of the suites inside "My mypage should" describe block
     beforeEach(function () {
+        if (flag === true) { return; }
         timeErr = 'before the runs';
         //first runs block starts durandals composition functions, and listens for an event which passes
         //the V/VM to our test, then changes flag to true to allow the next "runs" to run
@@ -48,16 +54,18 @@ describe('My welcome page should', function () {
         }, timeErr);
 
         runs(function () {
+            //defines Q in glob if not in glob
+            if (window.Q === undefined) {
+                window.Q = require("../Scripts/q");
+            }
             //since we just want the view/viewmodel from above code, this is empty as we need to force jasmine to wait on V/VM and 2 "runs"
             //functions is part of the syntax
         });
     });
-    describe('blablabla', function () {
+
+    describe('SHOULD', function () {
         it('have a title that matches the dom', function () {
             expect(compo.view.childNodes[1].innerHTML).toBe('Welcome to the Durandal Starter Kit!');
         });
     });
 });
-
-//force rfresh
-//force refresh 2

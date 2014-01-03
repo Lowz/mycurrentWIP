@@ -1,45 +1,68 @@
-﻿define([ 'breeze'], function ( breeze) {
+﻿define(['knockout', 'breeze'], function (ko, breeze) {
     //setup breeze vars
     var EntityQuery = breeze.EntityQuery;
     var FilterQueryOp = breeze.FilterQueryOp;
     var manager = new breeze.EntityManager('/breeze/Dummy');
 
     //define the var or predicates for filtering data
-    
+
     var saveChanges = function () {
         if (manager.hasChanges()) {
             manager.saveChanges();
         }
     };
 
+    var getDUMMYS = function (dataset) {
+        predicates = undefined;
+        return getData(dataset, 'Dummys');
+    };
+
+    var getTheBoy = function (dataset) {
+        predicates = [];
+        var p1 = new breeze.Predicate('firstName', '==', 'John');
+        predicates = breeze.Predicate.and(p1);
+        return getData(dataset, 'Dummys', predicates);
+    };
+
+    var getTheGirl = function (dataset) {
+        predicates = [];
+        var p1 = new breeze.Predicate('firstName', '==', 'Shara');
+        predicates = breeze.Predicate.and(p1);
+        return getData(dataset, 'Dummys');
+    };
+
     //replace dummy with a sensical identifier
-    var getDUMMYS = function (DUMMYObservable) {
-        var query = EntityQuery.from('Dummys');
-        //DUMMYObservable([]);
-        DUMMYObservable.removeAll();
+    var getData = function (dataset, endpoint, predicates) {
+        console.info('yo 1');
+        var dfd = jQuery.Deferred();
+        var query = EntityQuery.from(endpoint);
 
-        manager.executeQuery(query)
-            .then(querySucceeded)
-            .fail(queryFailed);
-
-
-        //functiuon which pushes data into a normal array, then afterwards pushes said normal array to oberservable array(to avoid refresh spam,
-        //if dummys.push is called 100 times, the page will refresh the binding 100 times (lots of computation)
-        function querySucceeded(data) {
-            var DUMMYS = [];
+        var prepDataArray = function (data) {
+            console.info('yo 2');
+            dataset.removeAll();
 
             data.results.forEach(function (item) {
-                DUMMYObservable.push(item);
+                dataset.push(item);
             });
 
-            console.log('DUMMY Data fetched from DB');
+            dfd.resolve(dataset);
+        };
+
+        if (predicates !== undefined) {
+            query = query.where(predicates);
         }
+
+        manager.executeQuery(query)
+            .then(prepDataArray);
+        
+        return dfd.promise();
     };
 
 
     //expose dataservice funcs
     var dataservice = {
         getDUMMYS: getDUMMYS,
+        getTheBoy: getTheBoy,
         saveChanges: saveChanges
     };
     return dataservice;
@@ -60,11 +83,4 @@
         return mapped;
     };
     */
-
-
-    //#Private funcs
-    function queryFailed(err, errMsg) {
-        var msg = 'Error getting data. ' + errMsg;
-        console.log(msg);
-    }
 });

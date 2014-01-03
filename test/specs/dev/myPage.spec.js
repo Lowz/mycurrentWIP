@@ -18,7 +18,13 @@ describe('My myPage page ', function () {
     var flag = false;
     var timeErr;
     var dataservice = require('services/dataservice');
-    var functionSpy = jasmine.createSpy();
+
+    var functionSpy,
+        FakePromise = function (data) {
+            var dfd = jQuery.Deferred();
+            dfd.resolve(data);
+            return dfd.promise();
+        };
 
 
     //check for Q, require it if not present (small hack)
@@ -34,9 +40,19 @@ describe('My myPage page ', function () {
         if (flag === true) { return; }
         timeErr = 'before the runs';
         //set up spies here
-        functionSpy = spyOn(dataservice, 'getDUMMYS').andReturn([
-            { iD: 0, firstName: 'paul', lastName: 'finnen' },
-            { iD: 1, firstName: 'garry', lastName: 'taylor' }]);
+        functionSpy = spyOn(dataservice, 'getDUMMYS').andCallFake(function (data) {
+            data.removeAll();
+            var mockData = [
+                  { iD: 0, firstName: 'paul', lastName: 'finnen' },
+                  { iD: 1, firstName: 'garry', lastName: 'taylor' }
+            ];
+
+            data(mockData);
+
+            var promise = new FakePromise(mockData);
+
+            return promise;
+        });
         //first runs block starts durandals composition functions, and listens for an event which passes
         //the V/VM to our test, then changes flag to true to allow the next "runs" to run
         runs(function () {
@@ -88,7 +104,7 @@ describe('My myPage page ', function () {
 
         it('have items after calling load', function () {
             //console.info(compo.viewModel.dummys);
-            expect(compo.viewModel.dummys().length).toBe(3);
+            expect(compo.viewModel.dummys().length).toBe(2);
         });
 
     });

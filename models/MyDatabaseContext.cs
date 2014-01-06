@@ -8,9 +8,13 @@ namespace _2.models
     public class MyDatabaseContext : DbContext
     {
         public MyDatabaseContext()
-            : base("Database1") { }
+            : base("DB1") { }
 
         public DbSet<dummy> Dummys { get; set; }
+        public DbSet<clientCase> clientCases { get; set; }        
+        public DbSet<client> clients { get; set; }
+        public DbSet<note> notes { get; set; }
+        
     }
 
 

@@ -102,17 +102,19 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include="app\main.js" />
+    <Content Include="app\viewmodels\crudPage.js" />
     <Content Include="app\viewmodels\myPage.js" />
     <Content Include="app\viewmodels\shell.js" />
     <Content Include="app\viewmodels\welcome.js" />
+    <Content Include="app\views\crudPage.html" />
     <Content Include="app\views\myPage.html" />
     <Content Include="app\views\shell.html" />
     <Content Include="app\views\welcome.html" />
-    <Content Include="App_Data\Database1.mdf" />
-    <Content Include="App_Data\Database1_log.ldf">
-      <DependentUpon>Database1.mdf</DependentUpon>
-    </Content>
     <Content Include="app\services\dataservice.js" />
+    <Content Include="App_Data\DB1.mdf" />
+    <Content Include="App_Data\DB1_log.ldf">
+      <DependentUpon>DB1.mdf</DependentUpon>
+    </Content>
     <Content Include="css\ie10mobile.css" />
     <Content Include="css\starterkit.css" />
     <Content Include="Gruntfile.js" />
@@ -196,9 +198,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BreezeWebApiConfig.cs" />
+    <Compile Include="Controllers\clientController.cs" />
+    <Compile Include="Controllers\noteController.cs" />
+    <Compile Include="models\client.cs" />
+    <Compile Include="models\clientCase.cs" />
+    <Compile Include="Controllers\CaseController.cs" />
     <Compile Include="Controllers\DummyController.cs" />
     <Compile Include="models\dummy.cs" />
     <Compile Include="models\MyDatabaseContext.cs" />
+    <Compile Include="models\note.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -240,6 +248,7 @@
     <Content Include="node_modules\jasmine-before-all\spec\jasmine-before-all-spec.coffee" />
     <Content Include="node_modules\jasmine-before-all\tasks\.gitkeep" />
     <Content Include="packages.config" />
+    <Content Include="test\specs\dev\crudPage.spec.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

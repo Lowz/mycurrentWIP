@@ -1,0 +1,29 @@
+﻿<section>
+    <h2 data-bind="html: displayName"></h2>
+    <blockquote data-bind="html: description"></blockquote>
+    <h3>test binds</h3>
+
+    <div class="alert alert-success">
+      <h4>Below is data!</h4>
+    </div>
+
+<!--    <div data-bind="foreach: clientCases.applicants.client">
+        <p>
+            <label>First Name</label>
+            <input data-bind="value: clientCases.applicants.client.firstName" />
+        </p>
+        <p>
+            <label>Surname</label>
+            <input data-bind="value: clientCases.applicants.client.lastName" />
+        </p>
+        <p>
+            <label>Notes</label>
+            <input data-bind="value: clientCases.applicants.client.notes.note" />
+        </p>        
+    </div>-->
+</section>
+
+<section>
+    <input type="button" data-bind="click: setup" value="Refresh" />
+    <input type="button" data-bind="click: save" value="Save" />    
+</section>

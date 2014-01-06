@@ -4,19 +4,21 @@
     var FilterQueryOp = breeze.FilterQueryOp;
     var manager = new breeze.EntityManager('/breeze/Dummy');
 
-    //define the var or predicates for filtering data
-
+    
+    //save changes func - pushes updates to DB
     var saveChanges = function () {
         if (manager.hasChanges()) {
             manager.saveChanges();
         }
     };
 
+    //fetches all dummys off DB
     var getDUMMYS = function (dataset) {
         predicates = undefined;
         return getData(dataset, 'Dummys');
     };
 
+    //fetches and filters dummys off DB
     var getTheBoy = function (dataset) {
         predicates = [];
         var p1 = new breeze.Predicate('firstName', '==', 'John');
@@ -24,6 +26,7 @@
         return getData(dataset, 'Dummys', predicates);
     };
 
+    //fetches and filters dummys off DB
     var getTheGirl = function (dataset) {
         predicates = [];
         var p1 = new breeze.Predicate('firstName', '==', 'Shara');
@@ -66,21 +69,4 @@
         saveChanges: saveChanges
     };
     return dataservice;
-
-
-    /**
-    var DUMMYObsObj = function(dto) {
-        return mapToObservable(dto);
-    };
-
-    function mapToObservable(dto) {
-        var mapped = {};
-        for (prop in dto) {
-            if (dto.hasOwnProperty(prop)) {
-                mapped[prop] = ko.observable(dto[prop]);
-            }
-        }
-        return mapped;
-    };
-    */
 });

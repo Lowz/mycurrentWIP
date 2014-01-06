@@ -169,7 +169,7 @@ module.exports = function (grunt) {
     //using 'watch:dev' can hide these as it WAITS for a change. But really its just a temp pause on the loop
     grunt.registerTask('default', ['jshint', 'jasmine:dev']);
     grunt.registerTask('jshinter', ['jshint']);
-    grunt.registerTask('watcher', ['watch:dev', 'jasmine:dev']);
+    grunt.registerTask('watcher', ['watch:dev','jshint', 'jasmine:dev']);
     grunt.registerTask('debug', ['jshint', 'connect:dev:livereload', 'open:dev', 'watch:dev']);
     grunt.registerTask('build', ['jshint', 'jasmine:dev', 'clean', 'copy', 'durandal:main', 'uglify', 'jasmine:build', 'connect:build', 'open:build', 'watch:build']);
 

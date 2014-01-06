@@ -17,6 +17,8 @@
         console.info('You done goofed... Got ', data, ' back.');
     };
 
+
+    //can include pass/fail
     var load = function () {
         if (isloaded === false) {
             console.info('yo ');
@@ -26,6 +28,7 @@
         //isloaded = true;
     };
 
+    //dataservice contains all query logic
     var save = function () {
         dataservice.saveChanges();
     };

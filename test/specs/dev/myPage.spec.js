@@ -39,6 +39,7 @@ describe('My myPage page ', function () {
     beforeEach(function () {
         if (flag === true) { return; }
         timeErr = 'before the runs';
+
         //set up spies here
         functionSpy = spyOn(dataservice, 'getDUMMYS').andCallFake(function (data) {
             data.removeAll();
@@ -53,6 +54,8 @@ describe('My myPage page ', function () {
 
             return promise;
         });
+
+
         //first runs block starts durandals composition functions, and listens for an event which passes
         //the V/VM to our test, then changes flag to true to allow the next "runs" to run
         runs(function () {
@@ -76,10 +79,12 @@ describe('My myPage page ', function () {
             });
         }, 'async');
 
+
         //waitsFor is repeatedly run till flag is true (approx 40times)
         waitsFor(function () {
             return (flag);
         }, timeErr);
+
 
         runs(function () {
             //defines Q in glob if not in glob
@@ -103,7 +108,6 @@ describe('My myPage page ', function () {
         });
 
         it('have items after calling load', function () {
-            //console.info(compo.viewModel.dummys);
             expect(compo.viewModel.dummys().length).toBe(2);
         });
 

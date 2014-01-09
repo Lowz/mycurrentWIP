@@ -4,26 +4,55 @@
     <h3>test binds</h3>
 
     <div class="alert alert-success">
-      <h4>Below is data!</h4>
+        <h4>Below is data!</h4>
     </div>
 
-<!--    <div data-bind="foreach: clientCases.applicants.client">
+    <div data-bind="foreach: applications">
+        <h1 data-bind="text: ApplicationId"></h1>
         <p>
-            <label>First Name</label>
-            <input data-bind="value: clientCases.applicants.client.firstName" />
+            <label>Status</label>
+            <span data-bind="text: Status"></span>
         </p>
         <p>
+            <label>Entry Date</label>
+            <input data-bind="value: EntryDate" />
+        </p>
+
+        <div data-bind="foreach: Clients">
+            <span>
+                <label>First Name</label>
+                <input data-bind="value: firstName" />
+                <label>Surname</label>
+                <input data-bind="value: surname" />
+                <label>Status</label>
+                <input data-bind="text: Application.Status" />
+            </span>
+        </div>
+    </div>
+
+<!--    <div data-bind="foreach: Application">
+        <span>
+            <label>Status</label>
+            <input data-bind="value: Status" />
+        </span>
+<!--        <span>
             <label>Surname</label>
-            <input data-bind="value: clientCases.applicants.client.lastName" />
-        </p>
-        <p>
+            <input data-bind="value: client" />
+        </span>-->
+<!--        <span>
+            <label data-bind="text: Application.Status" />
+        </span>-->
+
+        <!--<p>
             <label>Notes</label>
             <input data-bind="value: clientCases.applicants.client.notes.note" />
-        </p>        
-    </div>-->
+        </p>        -->
+   <!-- </div>-->
 </section>
 
 <section>
-    <input type="button" data-bind="click: setup" value="Refresh" />
-    <input type="button" data-bind="click: save" value="Save" />    
+    <input type="button" data-bind="click: initDb" value="init" />
+    <input type="button" data-bind="click: reset" value="reset" />
+    <input type="button" data-bind="click: load" value="Refresh" />
+    <input type="button" data-bind="click: save" value="Save" />
 </section>

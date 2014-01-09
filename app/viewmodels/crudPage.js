@@ -4,43 +4,57 @@
     //If you wish to be able to create multiple instances, instead export a function.
     //See the "welcome" module for an example of function export.
     var isloaded = false;
-    //var note1 = 'asdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasdf';
-    //var note2 = 'fdsafdsafdsafdsa fdsafdsafdsafdsafdsa';
-    //var client1 = { firstName: 'Paul', lastName: 'Finnen' }
-    //var client2 = { firstName: 'John', lastName: 'Connors' }
+    var clients = ko.observableArray([]);
+    var notes = ko.observableArray([]);
+    var applications = ko.observableArray([]);
+    var results = ko.observableArray([]);
+    //initDb();
+    //reset();
 
-    var clientCases = ko.observable;
-    clientCases.notes = ko.observableArray([]);
-    clientCases.clients = ko.observableArray([]);
 
     var pass = function (data) {
         //dummys.removeAll();
         //dummys(data());
-        console.log("Passed yeahhh");
+        console.log(clients);
     };
 
     var fail = function (data) {
         console.info('You done goofed... Got ', data, ' back.');
     };
 
-    var setup = function () {
-        initDB().then(function (data) {
-            addNote('asdfasdfasdfasdfasdfasdf asdfasdfasdfasdfasdf');
-            addNote('fdsafdsafdsafdsa fdsafdsafdsafdsafdsa');
-            addClient('Paul', 'Finnen');
-            addClient('John', 'Connors');
-            addClientCase();
-            save();
-        });
-    };
     //can include pass/fail
     var load = function () {
         if (isloaded === false) {
-            dataservice.getClientCases(clientCases); //.then(pass, fail);
+            getApplications().then(pass, fail);
         }
 
         //isloaded = true;
     };
+
+    var getClients = function () {
+        dataservice.getClients(clients);
+        //var manager = new breeze.EntityManager('/breeze/App');
+
+        //var query = new breeze.EntityQuery()
+        //    .from("Clients")
+        //    .expand("Application");
+
+        //manager.executeQuery(query).then(function (data) {
+        //    clients.removeAll();
+        //    clients(data.results);
+        //}).fail(function (e) {
+        //    alert(e);
+        //});
+
+    }
+
+    var getNotes = function () {
+        dataservice.getNotes(notes);
+    }
+
+    var getApplications = function () {
+        return dataservice.getApplications(applications);
+    }
 
     //dataservice contains all query logic
     var save = function () {
@@ -55,25 +69,42 @@
         return dataservice.addClient(first, last);
     };
 
-    var addClientCase = function () {
-        return dataservice.addClientCase();
+    var addApplication = function () {
+        return dataservice.addApplication();
     };
-    
-    var initDB = function () {
+
+    var initDb = function () {
         return dataservice.initDB();
+    };
+
+    var reset = function () {
+        return dataservice.reset()
+    };
+
+    var purge = function () {
+        dataservice.purge(getApplications);
+        dataservice.purge(getClients);
+        dataservice.purge(getNotes);
     };
 
     return {
         displayName: 'crudPage',
         description: 'this is my CRUD page',
-        clientCases: clientCases,
         addNote: addNote,
         addClient: addClient,
-        addClientCase: addClientCase,
+        addApplication: addApplication,
         load: load,
+        getClients: getClients,
+        getNotes: getNotes,
+        getApplications: getApplications,
+        //save: save,
+        //setup: setup,
+        initDb: initDb,
+        purge: purge,
+        reset: reset,
         save: save,
-        setup: setup,
-        initDB: initDB,
+        clients: clients,
+        applications: applications,
 
         compositionComplete: function (view, parent) {
             app = require('durandal/app');

@@ -1,86 +1,85 @@
 ﻿define(['knockout', 'breeze'], function (ko, breeze) {
     //setup breeze vars
+    //********************************************************************************************************************************
     var EntityQuery = breeze.EntityQuery;
     var FilterQueryOp = breeze.FilterQueryOp;
-    var manager = new breeze.EntityManager('/breeze/note');
+    var manager = new breeze.EntityManager('/breeze/App');
     var type;
     var isLoaded = false;
-
-    //save changes func - pushes updates to DB
-    var saveChanges = function () {
-        if (manager.hasChanges()) {
-            manager.saveChanges();
-        }
-    };
-
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //TEMPORARY FUNCTIONS
     var initDB = function () {
         var dfd = jQuery.Deferred();
         console.log('hi');
-        if (isLoaded == false) {
-            manager.metadataStore.fetchMetadata('breeze/note')
+        if (isLoaded === false) {
+            manager.metadataStore.fetchMetadata('breeze/App')
                 .then(function (metadata) {
                     isLoaded = true;
                     dfd.resolve(manager);
                     console.log('works done on init');
                 });
-        };
+        }
         return dfd.promise();
     };
 
-    var addNote = function (body) {
-        var newNote = manager.createEntity('note', { content: body });
+    var purge = function (callback) {
+        $.post('/breeze/App/purge', function () {
+            manager.clear();
+            if (callback) callback();
+        });
     };
-    //type = manager.metadataStore.getEntityType('note');
-    //manager = (manager + 'note');
 
-    //saveChanges();
+    var reset = function (callback) {
+        $.post('/breeze/App/reset', function () {
+            manager.clear();
+            if (callback) callback();
+        })
+    };
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //ADD TO DB FUNCS
+    var addNote = function (cont, app) {
+        var newNote = manager.createEntity('note', { content: cont, Application: app });
+    };
 
-
-    var addClient = function (first, last) {
+    var addClient = function (first, last, app) {
         //manager = manager + 'client';
-        var newClient = manager.createEntity('client', { firstName: first, surname: last });
+        var newClient = manager.createEntity('client', { firstName: first, surname: last, Application: app });
         //saveChanges();
     };
 
-    var addClientCase = function () {
+    var addApplication = function (status, date) {
         //manager = manager + 'clientCase';
-        var newClientCase = manager.createEntity('clientCase');
+        var newApplication = manager.createEntity('application', { Status: status, EntryDate: date });
         //saveChanges();
     };
-
-    //fetches all dummys off DB
-    var getDUMMYS = function (dataset) {
-        predicates = undefined;
-        return getData(dataset, 'Dummys');
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //GET FROM DB FUNCS
+    var getApplications = function (dataset) {
+        var predicates = undefined;
+        expand = 'Clients';
+        return getData(dataset, 'applications', predicates, expand);
     };
 
-    //fetches and filters dummys off DB
-    var getTheBoy = function (dataset) {
-        predicates = [];
-        var p1 = new breeze.Predicate('firstName', '==', 'John');
-        predicates = breeze.Predicate.and(p1);
-        return getData(dataset, 'Dummys', predicates);
+    var getClients = function (dataset) {
+        var predicates = new breeze.Predicate('firstName', 'startswith', 'J');
+        var expand = 'Application';
+        return getData(dataset, 'clients', predicates, expand);
     };
 
-    //fetches and filters dummys off DB
-    var getTheGirl = function (dataset) {
-        predicates = [];
-        var p1 = new breeze.Predicate('firstName', '==', 'Shara');
-        predicates = breeze.Predicate.and(p1);
-        return getData(dataset, 'Dummys');
+    var getNotes = function (dataset) {
+        var predicates = undefined;
+        return getData(dataset, 'notes');
     };
-
-
-    var getClientCases = function (dataset) {
-        predicates = undefined;
-        return getData(dataset, 'clientCases');
-    };
-
-
-    //handles fetching data (takes params)
-    var getData = function (dataset, endpoint, predicates) {
+    //********************************************************************************************************************************
+    //AND LOGIC FOR ABOVE
+    var getData = function (dataset, endpoint, predicates, expand) {
         var dfd = jQuery.Deferred();
-        var query = EntityQuery.from(endpoint);
 
         var prepDataArray = function (data) {
             dataset.removeAll();
@@ -92,30 +91,59 @@
             dfd.resolve(dataset);
         };
 
-        if (predicates !== undefined) {
-            query = query.where(predicates);
-        }
-
-        manager.executeQuery(query)
-            .then(prepDataArray);
+        query = buildQuery(endpoint, predicates, expand);
+        manager.executeQuery(query).then(
+            prepDataArray,
+            function (data) {
+                dfd.reject(data);
+            });
 
         return dfd.promise();
     };
 
-    //var purgeDB = function () {
-    //    var clients = context
-    //};
+    var buildQuery = function (endpoint, predicates, expand) {
+        var query = new EntityQuery.from(endpoint);
 
+        if (predicates != undefined && expand === undefined) {
+            query = query.where(predicates);
+        }
+
+        if (expand != undefined && predicates === undefined) {
+            var query = query.expand(expand);
+        }//STOP! AM I PAPAING THIS? it does make it a lot more readable...
+
+        if (expand != undefined && predicates != undefined) {
+            var query = query.where(predicates).expand(expand);
+        }
+
+        return query;
+    };
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //********************************************************************************************************************************
+    //expose methods and savechanges method
+    
+
+    //save changes func - pushes updates to DB
+    var saveChanges = function () {
+        if (manager.hasChanges()) {
+            manager.saveChanges();
+        }
+    };
 
     //expose dataservice funcs
     var dataservice = {
-        getDUMMYS: getDUMMYS,
-        getTheBoy: getTheBoy,
         saveChanges: saveChanges,
         addNote: addNote,
         addClient: addClient,
-        addClientCase: addClientCase,
-        initDB: initDB
+        addApplication: addApplication,
+        initDB: initDB,
+        purge: purge,
+        reset: reset,
+        getApplications: getApplications,
+        getNotes: getNotes,
+        getClients: getClients,
+        buildQuery: buildQuery
     };
     return dataservice;
 });

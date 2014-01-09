@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 namespace _2.Controllers
 {
     [BreezeController]
-    public class CaseController : ApiController
+    public class AppController : ApiController
     {
         //give the controller the dbcontext
         readonly EFContextProvider<MyDatabaseContext> contextProvider = new EFContextProvider<MyDatabaseContext>();
@@ -24,9 +24,9 @@ namespace _2.Controllers
         }
         //call for data from dummys table
         [HttpGet]
-        public IQueryable<clientCase> ClientCases()
+        public IQueryable<Application> Applications()
         {
-            return contextProvider.Context.clientCases;
+            return contextProvider.Context.applications;
         }
 
         //save changes to dummys table
@@ -34,6 +34,34 @@ namespace _2.Controllers
         public SaveResult SaveChanges(JObject saveBundle)
         {
             return contextProvider.SaveChanges(saveBundle);
+        }
+
+        //call for data from dummys table
+        [HttpGet]
+        public IQueryable<client> clients()
+        {
+            return contextProvider.Context.clients;
+        }
+
+        [HttpGet]
+        public IQueryable<note> notes()
+        {
+            return contextProvider.Context.notes;
+        }
+
+        [HttpPost]
+        public string Purge()
+        {
+            DbInitialiser.PurgeDatabase(contextProvider.Context);
+            return "purged";
+        }
+
+        [HttpPost]
+        public string reset()
+        {
+            Purge();
+            DbInitialiser.SeedDatabase(contextProvider.Context);
+            return "reset";
         }
     }
 }

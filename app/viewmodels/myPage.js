@@ -22,7 +22,7 @@
     var load = function () {
         if (isloaded === false) {
             console.info('yo ');
-            dataservice.getDUMMYS(dummys); //.then(pass, fail);
+            //dataservice.getDUMMYS(dummys); //.then(pass, fail);
         }
 
         //isloaded = true;

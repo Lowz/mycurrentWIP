@@ -36,5 +36,19 @@ namespace _2.Controllers
         {
             return contextProvider.SaveChanges(saveBundle);
         }
+
+        [HttpPost]
+        public string Purge()
+        {
+            DbInitialiser.PurgeDatabase(contextProvider.Context);
+            return "purged";
+        }
+
+        public string reset()
+        {
+            Purge();
+            DbInitialiser.SeedDatabase(contextProvider.Context);
+            return "reset";
+        }
     }
 }

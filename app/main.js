@@ -5,7 +5,7 @@
         'plugins' : '../lib/durandal/js/plugins',
         'transitions' : '../lib/durandal/js/transitions',
         'knockout': '../lib/knockout/knockout-2.3.0',
-        'bootstrap': '../lib/bootstrap/js/bootstrap',
+        'bootstrap': '../Scripts/bootstrap/js/bootstrap',
         'jquery': '../lib/jquery/jquery-1.9.1',
         'models': '../models',
         'breeze': '../Scripts/breeze.min',

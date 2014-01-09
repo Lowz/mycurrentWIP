@@ -62,6 +62,7 @@
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
@@ -111,12 +112,13 @@
     <Content Include="app\views\shell.html" />
     <Content Include="app\views\welcome.html" />
     <Content Include="app\services\dataservice.js" />
-    <Content Include="App_Data\DB1.mdf" />
-    <Content Include="App_Data\DB1_log.ldf">
-      <DependentUpon>DB1.mdf</DependentUpon>
-    </Content>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="css\ie10mobile.css" />
     <Content Include="css\starterkit.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Gruntfile.js" />
     <Content Include="index.html" />
     <Content Include="lib\bootstrap\css\bootstrap-responsive.css" />
@@ -152,6 +154,9 @@
     <Content Include="lib\font-awesome\css\font-awesome.css" />
     <Content Include="lib\font-awesome\css\font-awesome.min.css" />
     <Content Include="lib\font-awesome\font\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="lib\jquery\jquery-1.9.1.intellisense.js" />
     <Content Include="lib\jasmine-before-all.js" />
     <Content Include="lib\jasmineasync.js" />
@@ -187,8 +192,13 @@
     <Content Include="node_modules\jasmine-before-all\spec\helpers\jasmine-given.js" />
     <Content Include="node_modules\jasmine-before-all\spec\helpers\jasmine.async.js" />
     <None Include="Scripts\breeze.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\breeze.debug.js" />
     <Content Include="Scripts\breeze.min.js" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
     <Content Include="test\specs\build\main.spec.js" />
@@ -201,9 +211,10 @@
     <Compile Include="Controllers\clientController.cs" />
     <Compile Include="Controllers\noteController.cs" />
     <Compile Include="models\client.cs" />
-    <Compile Include="models\clientCase.cs" />
-    <Compile Include="Controllers\CaseController.cs" />
+    <Compile Include="models\application.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\DummyController.cs" />
+    <Compile Include="models\DbInitialiser.cs" />
     <Compile Include="models\dummy.cs" />
     <Compile Include="models\MyDatabaseContext.cs" />
     <Compile Include="models\note.cs" />
@@ -249,6 +260,7 @@
     <Content Include="node_modules\jasmine-before-all\tasks\.gitkeep" />
     <Content Include="packages.config" />
     <Content Include="test\specs\dev\crudPage.spec.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -257,6 +269,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>

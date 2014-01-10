@@ -12,7 +12,7 @@ module.exports = function (grunt) {
     };
     var mixIn = require('mout/object/mixIn');
     var requireConfig = {
-        baseUrl: 'app/',
+        baseUrl: 'app',
         paths: {
             'jquery': '../lib/jquery/jquery-1.9.1',
             'knockout': '../lib/knockout/knockout-2.3.0.debug',
@@ -23,7 +23,8 @@ module.exports = function (grunt) {
             'async': '../lib/jasmineasync',
             'breeze': '../Scripts/breeze.min',
             'services': 'services',
-            'q': '../Scripts/q'
+            'Q': '../Scripts/q',
+            'crud': 'viewmodels/crudPage'
         }
     };
 

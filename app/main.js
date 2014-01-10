@@ -9,7 +9,7 @@
         'jquery': '../lib/jquery/jquery-1.9.1',
         'models': '../models',
         'breeze': '../Scripts/breeze.min',
-        'services': 'services'
+        'services': 'services',        
     },
     shim: {
         'bootstrap': {

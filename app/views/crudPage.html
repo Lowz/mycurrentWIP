@@ -21,11 +21,15 @@
         <div data-bind="foreach: Clients">
             <span>
                 <label>First Name</label>
-                <input data-bind="value: firstName" />
+                <input class="test" data-bind="value: firstName" />
                 <label>Surname</label>
                 <input data-bind="value: surname" />
-                <label>Status</label>
-                <input data-bind="text: Application.Status" />
+            </span>
+        </div>
+        <div data-bind="foreach: Notes">
+            <span>
+                <label>NOTE:</label>
+                <input data-bind="value: content" />
             </span>
         </div>
     </div>

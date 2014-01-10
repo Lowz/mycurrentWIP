@@ -3,64 +3,36 @@
     //That means that every module that "requires" it will get the same object instance.
     //If you wish to be able to create multiple instances, instead export a function.
     //See the "welcome" module for an example of function export.
+
+    //*****************************************************VARS***********************************************************************
     var isloaded = false;
     var clients = ko.observableArray([]);
     var notes = ko.observableArray([]);
     var applications = ko.observableArray([]);
     var results = ko.observableArray([]);
-    //initDb();
-    //reset();
 
 
-    var pass = function (data) {
-        //dummys.removeAll();
-        //dummys(data());
-        console.log(clients);
+
+    //********************************************************************************************************************************
+    //*********************************************************TEMP FUNCTIONS*********************************************************
+    //********************************************************************************************************************************
+    //TEMPORARY FUNCTIONS
+    var reset = function () {
+        return dataservice.reset();
     };
 
-    var fail = function (data) {
-        console.info('You done goofed... Got ', data, ' back.');
+    var purge = function () {
+        dataservice.purge(getApplications);
+        dataservice.purge(getClients);
+        dataservice.purge(getNotes);
     };
 
-    //can include pass/fail
-    var load = function () {
-        if (isloaded === false) {
-            getApplications().then(pass, fail);
-        }
 
-        //isloaded = true;
-    };
 
-    var getClients = function () {
-        dataservice.getClients(clients);
-        //var manager = new breeze.EntityManager('/breeze/App');
-
-        //var query = new breeze.EntityQuery()
-        //    .from("Clients")
-        //    .expand("Application");
-
-        //manager.executeQuery(query).then(function (data) {
-        //    clients.removeAll();
-        //    clients(data.results);
-        //}).fail(function (e) {
-        //    alert(e);
-        //});
-
-    }
-
-    var getNotes = function () {
-        dataservice.getNotes(notes);
-    }
-
-    var getApplications = function () {
-        return dataservice.getApplications(applications);
-    }
-
-    //dataservice contains all query logic
-    var save = function () {
-        dataservice.saveChanges();
-    };
-
+    //********************************************************************************************************************************
+    //*************************************************************ADD FUNCS**********************************************************
+    //********************************************************************************************************************************
+    //ADD TO DB FUNCS
     var addNote = function (body) {
         return dataservice.addNote(body);
     };
@@ -77,37 +49,71 @@
         return dataservice.initDB();
     };
 
-    var reset = function () {
-        return dataservice.reset()
+
+
+    //********************************************************************************************************************************
+    //**************************************************************GET FUNCS*********************************************************
+    //********************************************************************************************************************************
+    //GET FROM DB FUNCS
+    var pass = function (data) {
+        console.log(applications()[0]);
     };
 
-    var purge = function () {
-        dataservice.purge(getApplications);
-        dataservice.purge(getClients);
-        dataservice.purge(getNotes);
+    var fail = function (data) {
+        console.info('You done goofed... Got ', data, ' back.');
+    };
+
+    //can include pass/fail
+    var load = function () {
+        if (isloaded === false) {
+            getApplications().then(pass, fail);
+        }
+        //isloaded = true;
+    };
+
+    var getClients = function () {
+        dataservice.getClients(clients);
+    };
+
+    var getNotes = function () {
+        dataservice.getNotes(notes);
+    };
+
+    var getApplications = function () {
+        return dataservice.getApplications(applications);
+    };
+
+
+
+    //********************************************************************************************************************************
+    //**************************************************************SAVE AND EXPOSE***************************************************
+    //********************************************************************************************************************************
+    //expose methods and savechanges method
+    //dataservice contains all query logic
+    var save = function () {
+        dataservice.saveChanges();
     };
 
     return {
         displayName: 'crudPage',
         description: 'this is my CRUD page',
+        clients: clients,
+        applications: applications,
+        purge: purge,
+        reset: reset,
+        getClients: getClients,
+        getNotes: getNotes,
+        getApplications: getApplications,
+        initDb: initDb,
         addNote: addNote,
         addClient: addClient,
         addApplication: addApplication,
         load: load,
-        getClients: getClients,
-        getNotes: getNotes,
-        getApplications: getApplications,
-        //save: save,
-        //setup: setup,
-        initDb: initDb,
-        purge: purge,
-        reset: reset,
         save: save,
-        clients: clients,
-        applications: applications,
 
         compositionComplete: function (view, parent) {
             app = require('durandal/app');
+            load();
             app.trigger('test:compositionComplete', { view: view, viewModel: this });
         },
 
